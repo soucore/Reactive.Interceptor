@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-Worker-22BC3A04-E425-4470-BBBB-B9D5DE8D4FD9</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="4.2.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Reactive.Interceptor\Reactive.Interceptor.csproj" />
+    <ProjectReference Include="..\providers\Reactive.Interceptor.Provider.Example1\Reactive.Interceptor.Provider.Example1.csproj" />
+    <ProjectReference Include="..\providers\Reactive.Interceptor.Provider.Example2\Reactive.Interceptor.Provider.Example2.csproj" />
+    <ProjectReference Include="..\providers\Reactive.Interceptor.Provider.Example3\Reactive.Interceptor.Provider.Example3.csproj" />
+  </ItemGroup>
+</Project>
