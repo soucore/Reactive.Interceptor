@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Reactive.Interceptor.Client.Interface;
 using Reactive.Interceptor.Core;
 using Reactive.Interceptor.Core.Extensions;
-using Reactive.Interceptor.Core.Helpers;
 using Reactive.Interceptor.Core.Interfaces;
 
 namespace Reactive.Interceptor.Client;
@@ -49,7 +48,7 @@ public class InterceptorReflection : IInterceptorReflection
             var newData = Convert.ChangeType(data, Interceptor.GetType().BaseType.GetGenericArguments()[0]);
             _context.DataInput = newData;
 
-            var output = await Interceptor.InvokeMethodResultAsync("AfterConsumed", newData);
+            var output = await Interceptor.InvokeTaskMethodResultAsync("AfterConsumed", newData);
             if (output != null) _ = _eventWrapper.EmitOnInterceptorToProvider(output);
             _context.DataOutput = output;
         }
