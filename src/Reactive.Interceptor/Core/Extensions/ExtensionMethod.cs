@@ -1,16 +1,15 @@
-﻿using Serilog;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Reactive.Interceptor.Core.Extensions;
 
 public static class ExtensionMethods
 {
-    public static async Task<object> InvokeAsync(this MethodInfo @this, object obj, params object[] parameters)
+    public static async Task<object> InvokeTaskAsync(this MethodInfo @this, object obj, params object[] parameters)
     {
-        var task = (Task)@this.Invoke(obj, parameters);
-        await task.ConfigureAwait(false);
-        var resultProperty = task.GetType().GetProperty("Result");
+        var value = (Task)@this.Invoke(obj, parameters);
+        await value.ConfigureAwait(false);
+        var result = value.GetType().GetProperty("Result");
 
-        return resultProperty.GetValue(task);
+        return result.GetValue(value);
     }
 }

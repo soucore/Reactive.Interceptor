@@ -15,11 +15,11 @@ public class ProviderReflection : IProviderReflection
     private CancellationToken CancellationToken;
 
     private readonly ILogger<ProviderReflection> _log;
-    private readonly Context _context;
     private readonly ConfigurationClient _configuration;
     private readonly IServiceProvider _serviceProvider;
     private readonly IEventMediator _event;
     private readonly IPolicyStrategy _policyCore;
+    private Context _context;
     private IProviderBase ProviderSource;
     private IProviderBase ProviderSink; 
     private IProviderBase ProviderDeadLetter;
@@ -134,6 +134,7 @@ public class ProviderReflection : IProviderReflection
 
     private void SendDataConsumed(object data)
     {
+        _context = Context.Clear();
         _context.DataInputOriginal = data;
         if(InterceptorType is null)
             _ = InvokeSink(data);
@@ -148,7 +149,7 @@ public class ProviderReflection : IProviderReflection
             var strategy = _policyCore.BuildStrategy();
             var result = await strategy.ExecuteAsync(async () =>
             {
-                var response = (Response) await ProviderSink.InvokeMethodResultAsync("Sink", data);
+                var response = (Response) await ProviderSink.InvokeTaskMethodResultAsync("Sink", data);
                 if(!response.Published && response.ExceptionCore is not null)
                     throw new CoreException("Fail Retry!", response.ExceptionCore);
 
