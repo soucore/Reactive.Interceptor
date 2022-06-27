@@ -47,7 +47,10 @@ public class ProviderReflection : IProviderReflection
         CancellationToken = cancellationToken;
         try
         {
-            var types = DiscoverProviders();
+            var assemblies = Assembly.GetEntryAssembly()
+                .GetReferencedAssemblies();
+
+            var types = DiscoverProviders(assemblies);
             await BuildProviders(types);
             ListenProvider();
         }
@@ -60,12 +63,9 @@ public class ProviderReflection : IProviderReflection
             await _event.EmitFromProviderToInterceptorError(err);
         }
     }
-    public IEnumerable<Type> DiscoverProviders()
-    {
-        IEnumerable<AssemblyName> assemblies = Assembly.GetEntryAssembly()
-            .GetReferencedAssemblies()
-            .Where(x => x.FullName.Contains("Reactive.Interceptor.Provider"));
 
+    public IEnumerable<Type> DiscoverProviders(IEnumerable<AssemblyName> assemblies)
+    {
         List<Type> types = new();
         foreach (var assemblyName in assemblies)
         {
