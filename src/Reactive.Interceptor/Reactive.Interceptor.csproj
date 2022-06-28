@@ -5,12 +5,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Company>Soucore</Company>
     <Description>Library of interception of data connected by different providers.</Description>
     <RepositoryUrl>https://github.com/soucore/Reactive.Interceptor</RepositoryUrl>
     <PackageTags>dotnet;net6;reactive;interceptor;provider;pipeline;mediator</PackageTags>
-    <PackageReleaseNotes>The library already contains in its kernel interfaces for creating providers and interceptors so that they can talk to each other. The minimum tests for launching a development version had already been done.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+		Small fix in assembly scan.
+		A small bug was identified where the base provider was being found. We just ignore it.
+	</PackageReleaseNotes>
     <SignAssembly>False</SignAssembly>
     <PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
