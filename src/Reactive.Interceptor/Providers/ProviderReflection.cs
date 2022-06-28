@@ -66,17 +66,18 @@ public class ProviderReflection : IProviderReflection
 
     public IEnumerable<Type> DiscoverProviders(IEnumerable<AssemblyName> assemblies)
     {
-        List<Type> types = new();
+        List<Type> typeList = new();
         foreach (var assemblyName in assemblies)
         {
             Assembly assembly = Assembly.Load(assemblyName);
-            IEnumerable<Type> type = assembly.GetTypes()
-                .Where(type => type.GetInterface(typeof(IProviderBase).Name, true) is not null);
+            IEnumerable<Type> types = assembly.GetTypes()
+                .Where(type => type.GetInterface(typeof(IProviderBase).Name, true) is not null
+                        && type.FullName != typeof(ProviderBase).FullName);
 
-            types.AddRange(type);
+            typeList.AddRange(types);
         }
 
-        return types;
+        return typeList;
     }
 
     public async Task BuildProviders(IEnumerable<Type> providerTypes)
