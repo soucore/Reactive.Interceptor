@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Reactive.Interceptor.Client.Interface;
 using Reactive.Interceptor.Core.Interfaces;
@@ -9,8 +11,17 @@ public class Bootstrap
     private readonly ILogger _log;
     private readonly IInterceptorReflection _interceptor;
     private readonly IHostApplicationLifetime _hostApp;
-
     private IProviderReflection _provider { get; set; }
+    public IServiceCollection Services { get; }
+    public IConfiguration Configuration { get; }
+
+    private static Type Type;
+
+    public Bootstrap(IServiceCollection services, IConfiguration configuration)
+    {
+        Services = services;
+        Configuration = configuration;
+    }
 
     public Bootstrap(IHostApplicationLifetime hostApp,
         ILoggerFactory loggerFactory, 
@@ -23,11 +34,23 @@ public class Bootstrap
         _interceptor = interceptor;
     }
 
-    public void Build(Type type)
+    public Bootstrap Inject<T>()
+    {
+        Type = typeof(T);
+        DependencyInjection.Inject<T>(Services, Configuration);
+        return this;
+    }
+
+    public Bootstrap Inject()
+    {
+        DependencyInjection.Inject(Services, Configuration);
+        return this;
+    }
+
+    public void Build()
     {
         _log.LogDebug("Started construction of the Interceptor!");
-
-        _interceptor.Run(type);
-        _provider.Run(type, _hostApp.ApplicationStopping);
+        _interceptor.Run(Type);
+        _provider.Run(Type, _hostApp.ApplicationStopping);
     }
 }

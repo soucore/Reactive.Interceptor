@@ -1,4 +1,4 @@
-using Reactive.Interceptor;
+using Reactive.Interceptor.Extensions;
 using Reactive.Interceptor.Provider.Example1;
 using Reactive.Interceptor.Provider.Example2;
 using Reactive.Interceptor.Provider.Example3;
@@ -15,10 +15,14 @@ Log.Logger = new LoggerConfiguration()
 
 IHost host = Host.CreateDefaultBuilder(args)
     .UseSerilog()
-    .UseReactiveInterceptor<InterceptorAction>()
-    .UseReactiveProviderExample1()
-    .UseReactiveProviderExample2()
-    .UseReactiveProviderExample3()
+    .ConfigureServices(services =>
+    {
+        services.AddReactiveInterceptor<InterceptorAction>();
+        services.AddReactiveProviderExample1();
+        services.AddReactiveProviderExample2();
+        services.AddReactiveProviderExample3();
+    })
+    .UseReactiveInterceptor()
     .Build();
     
 await host.RunAsync();

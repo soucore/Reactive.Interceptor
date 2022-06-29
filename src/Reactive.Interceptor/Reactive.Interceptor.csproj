@@ -5,19 +5,29 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Company>Soucore</Company>
+	<Authors>SouCore Community</Authors>
+	<Product>Reactive Interceptor</Product>
     <Description>Library of interception of data connected by different providers.</Description>
+	<PackageProjectUrl>https://github.com/soucore/Reactive.Interceptor</PackageProjectUrl>
     <RepositoryUrl>https://github.com/soucore/Reactive.Interceptor</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
+	<AssemblyName>Reactive.Interceptor</AssemblyName>
     <PackageTags>dotnet;net6;reactive;interceptor;provider;pipeline;mediator</PackageTags>
     <PackageReleaseNotes>
-		Small fix in assembly scan.
-		A small bug was identified where the base provider was being found. We just ignore it.
-	</PackageReleaseNotes>
-    <SignAssembly>False</SignAssembly>
-    <PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
+		Important changes to the library's main connector.
+		The initialization of how the service configures have changed.
+		The library now has the settings step in the service collection and the usage step in the act of building the host.
+	</PackageReleaseNotes>    
   </PropertyGroup>
-
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />

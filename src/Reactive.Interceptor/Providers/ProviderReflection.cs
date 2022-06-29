@@ -72,7 +72,7 @@ public class ProviderReflection : IProviderReflection
             Assembly assembly = Assembly.Load(assemblyName);
             IEnumerable<Type> types = assembly.GetTypes()
                 .Where(type => type.GetInterface(typeof(IProviderBase).Name, true) is not null
-                        && type.FullName != typeof(ProviderBase).FullName);
+                    && type.FullName != typeof(ProviderBase).FullName);
 
             typeList.AddRange(types);
         }

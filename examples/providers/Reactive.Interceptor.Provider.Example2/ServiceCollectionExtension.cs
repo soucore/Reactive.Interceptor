@@ -1,18 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Reactive.Interceptor.Provider.Example2
 {
     public static class ServiceCollectionExtension
     {
-        public static IHostBuilder UseReactiveProviderExample2(this IHostBuilder builder)
+        public static IServiceCollection AddReactiveProviderExample2(this IServiceCollection services)
         {
-            builder.ConfigureServices((_, services) =>
-            {
-                services.AddTransient<ProviderExample2>();
-            });
+            services.AddTransient<ProviderExample2>();
 
-            return builder;
+            return services;
         }
     }
 }
